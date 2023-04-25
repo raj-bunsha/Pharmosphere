@@ -6,8 +6,8 @@ public class Database
 {
     public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     public static final String URL = "jdbc:mysql://localhost/project";
-    public static final String USER = "root";
-    public static final String PASS = "sqlisbad";
+    public static final String USER = "raj";
+    public static final String PASS = "05082003";
     public Connection conn;
 
     public Database()
@@ -39,24 +39,6 @@ public class Database
             e.printStackTrace();
         }
     }
-
-    public void addManufacturer(Manufacturer m)
-    {
-        try
-        {
-            String sql = "insert into Manufacturer (id, manufacturer_name, phone_number) values(?, ?, ?)";
-            PreparedStatement p = conn.prepareStatement(sql);
-            p.setInt(1, m.getId());
-            p.setString(2, m.getName());
-            p.setString(3, m.getPhone());
-            p.executeUpdate();
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
     public void addOrder(Orders o)
     {
         try
@@ -75,7 +57,6 @@ public class Database
             e.printStackTrace();
         }
     }
-
     public void addSellRecord(SellRecords r)
     {
         try
