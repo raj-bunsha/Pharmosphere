@@ -1,15 +1,14 @@
 package backend;
 public class Orders 
 {
-    private int id, customerId, medicineId, totalPrice;
+    private int id, customerId, pharmacyId;
     private String date;
     
-    public Orders(int id, int customerId, int medicineId, int totalPrice, String date)
+    public Orders(int id, int customerId, int pharmacyId, String date)
     {
         this.id = id;
         this.customerId = customerId;
-        this.medicineId = medicineId;
-        this.totalPrice = totalPrice;
+        this.pharmacyId = pharmacyId;
         this.date = date;
     }
 
@@ -21,13 +20,9 @@ public class Orders
     {
         return customerId;
     }
-    public int getMedicineId()
+    public int getPharmacyId()
     {
-        return medicineId;
-    }
-    public int getTotalPrice()
-    {
-        return totalPrice;
+        return pharmacyId;
     }
     public String getDate()
     {

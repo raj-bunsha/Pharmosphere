@@ -1,10 +1,10 @@
 package backend;
-public class Store 
+public class Pharmacy 
 {
     private int id;
     private String name, password, location;
 
-    public Store(int id, String name, String password, String location)
+    public Pharmacy(int id, String name, String password, String location)
     {
         this.id = id;
         this.name = name;

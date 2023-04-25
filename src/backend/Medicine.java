@@ -1,16 +1,14 @@
 package backend;
-public class Medicine
+public class Medicine 
 {
     private int id;
-    private String name, category;
-    
-    public Medicine(int id, String name, String category)
+    private String name, details;
+    public Medicine(int id, String name, String details)
     {
         this.id = id;
         this.name = name;
-        this.category = category;
+        this.details = details;
     }
-
     public int getId()
     {
         return id;
@@ -19,8 +17,8 @@ public class Medicine
     {
         return name;
     }
-    public String getCategory()
+    public String getDetails()
     {
-        return category;
+        return details;
     }
 }

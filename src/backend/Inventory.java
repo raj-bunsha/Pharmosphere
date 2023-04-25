@@ -1,7 +1,7 @@
 package backend;
 public class Inventory 
 {    
-    private int id, pharmId, medicineId, manufacturerId, quantity, price;
+    private int id, pharmId, medicineId, quantity, price;
     private String expiryDate;
 
     public Inventory(int id, int pharmId, int medicineId, int manufacturerId, int quantity, int price, String expiryDate)
@@ -9,7 +9,6 @@ public class Inventory
         this.id = id;
         this.pharmId = pharmId;
         this.medicineId = medicineId;
-        this.manufacturerId = manufacturerId;
         this.quantity = quantity;
         this.price = price;
         this.expiryDate = expiryDate;
@@ -26,10 +25,6 @@ public class Inventory
     public int getMedicineId()
     {
         return medicineId;
-    }
-    public int getManufacturerId()
-    {
-        return manufacturerId;
     }
     public int getQuantity()
     {

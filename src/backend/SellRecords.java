@@ -1,25 +1,33 @@
 package backend;
 public class SellRecords 
 {
-    private int id, pharmId, orderId;
-
-    public SellRecords(int id, int pharmId, int orderId)
+    private int id, orderId, medicineId, price, quantity;
+    public SellRecords(int id, int orderId, int medicineId, int price, int quantity)
     {
         this.id = id;
-        this.pharmId = pharmId;
         this.orderId = orderId;
-    }   
-
+        this.medicineId = medicineId;
+        this.price = price;
+        this.quantity = quantity;
+    }
     public int getId()
     {
         return id;
-    }
-    public int getPharmId()
-    {
-        return pharmId;
-    }
+    }   
     public int getOrderId()
     {
         return orderId;
+    }
+    public int getMedicineId()
+    {
+        return medicineId;
+    }
+    public int getPrice()
+    {
+        return price;
+    }
+    public int getQuantity()
+    {
+        return quantity;
     }
 }

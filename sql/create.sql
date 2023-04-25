@@ -1,5 +1,6 @@
-create database project;
-use project;
+create database pharmosphere;
+use pharmosphere;
+
 CREATE TABLE Pharmacy(
     id int PRIMARY KEY,
     pharmacy_name varchar(20),
@@ -46,5 +47,4 @@ CREATE TABLE SellRecords(
     price int,
     quantity int,
     FOREIGN KEY(order_id) REFERENCES Orders(id),
-
 );
