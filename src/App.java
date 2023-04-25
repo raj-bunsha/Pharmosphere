@@ -3,12 +3,14 @@
 //?How do i run this program?
 import javax.swing.*;
 import java.awt.*;
+import backend.*;
 
 public class App extends JFrame {
     JPanel panel;
     JPanel menuPanel;
     Register register;
     Menu menu;
+    static Database db = new Database();
 
     public App() {
         setLayout(new FlowLayout());
