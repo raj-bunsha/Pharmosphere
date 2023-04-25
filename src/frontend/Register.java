@@ -1,18 +1,19 @@
+package frontend;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-class Register implements ActionListener {
+public class Register {
 
   JPanel panel;
   JTextField nameField;
   JTextField phoneField;
   JTextField passwordField, locationField;
-  JButton submitButton;
+  public JButton submitButton;
   JLabel result;
-  App app;
 
-  public Register(App app) {
+  public Register(JFrame parent) {
+    ActionListener listener = (ActionListener) parent;
     panel = new JPanel();
     panel.setLayout(new GridLayout(0, 2));
     nameField = new JTextField(20);
@@ -29,20 +30,10 @@ class Register implements ActionListener {
     panel.add(locationField);
     submitButton = new JButton("Submit");
     panel.add(submitButton);
-    submitButton.addActionListener(this);
+    submitButton.addActionListener(listener);
     result = new JLabel();
     panel.add(result);
-    this.app = app;
   }
-
-  public void actionPerformed(ActionEvent e) {
-    if (e.getSource() == submitButton) {
-      // add customer to database
-      result.setText("Pharma Registered");
-      app.callFunction();
-    }
-  }
-
   public JPanel getRegisterPanel() {
     return panel;
   }

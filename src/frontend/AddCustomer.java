@@ -1,14 +1,15 @@
+package frontend;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-class AddMedicine implements ActionListener {
+class AddCustomer implements ActionListener {
     JPanel panel;
     JTextField nameField;
     JTextField phoneField;
     JButton submitButton;
     JLabel result;
 
-    public AddMedicine() {
+    public AddCustomer() {
         panel = new JPanel();
         panel.setLayout(new GridLayout(2, 2));
         nameField = new JTextField(20);
@@ -30,7 +31,7 @@ class AddMedicine implements ActionListener {
             result.setText("Customer added to database");
         }
     }
-    public JPanel getAddMedicinePanel() {
+    public JPanel getAddCustomerPanel() {
         return panel;
     }
 }

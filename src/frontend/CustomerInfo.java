@@ -1,14 +1,15 @@
+package frontend;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-public class ShowSales implements ActionListener
+class CustomerInfo implements ActionListener
 {
     JPanel panel;
     JLabel label;
     JLabel text;
     JButton searchButton;
     private JTextField searchField;
-    public ShowSales() {
+    public CustomerInfo() {
         panel = new JPanel();
         label = new JLabel("Get Report of the customer");
         text= new JLabel("default");
@@ -31,7 +32,7 @@ public class ShowSales implements ActionListener
             text.setText("data");
         }
     }
-    public JPanel getSalesPanel(){
+    public JPanel getInfoPanel(){
         return panel;
     }
 }

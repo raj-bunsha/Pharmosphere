@@ -1,12 +1,13 @@
+package frontend;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-class Menu implements ActionListener
+public class MenuS implements ActionListener
 {
     JPanel panel,menuPanel;
     JFrame frame;
     JButton AddCustomer, AddMedicine, MakePurchase, MakeOrder, InventoryManager, ShowSubstitues, ShowSales, CustomerInfo;
-    public Menu(JFrame frame)
+    public MenuS(JFrame frame)
     {
         panel = new JPanel();
         menuPanel = new JPanel();

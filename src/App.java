@@ -1,24 +1,24 @@
-
-//write a sample swing program
-//?How do i run this program?
+import frontend.*;
+import backend.*;
 import javax.swing.*;
 import java.awt.*;
-import backend.*;
+import java.awt.event.*;
 
-public class App extends JFrame {
+public class App extends JFrame implements ActionListener {
     JPanel panel;
     JPanel menuPanel;
     Register register;
-    Menu menu;
-    static Database db = new Database();
+    MenuS MenuS;
+    Login login;
+    // static Database db = new Database();
 
     public App() {
         setLayout(new FlowLayout());
         // create a panel
-        Login login = new Login(this);
+        login = new Login(this);
         panel = login.getLoginPanel();
-        menu = new Menu(this);
-        menuPanel = menu.getMenuPanel();
+        MenuS = new MenuS(this);
+        menuPanel = MenuS.getMenuPanel();
         add(panel);
     }
 
@@ -37,6 +37,18 @@ public class App extends JFrame {
         add(panel);
         revalidate();
         repaint();
+    }
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == login.loginButton || e.getSource() == register.submitButton) {
+            // check username and password
+            login.result.setText("Login Successful");
+            callFunction();
+        }
+        if(e.getSource() == login.registerButton)
+        {
+            System.out.println("Register");
+            makeregister();
+        }
     }
 
     public static void main(String[] args) {

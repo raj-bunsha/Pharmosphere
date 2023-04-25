@@ -1,15 +1,16 @@
+package frontend;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-public class Login implements ActionListener
+public class Login
 {
     JPanel panel;
     JTextField usernameField;
     JPasswordField passwordField;
-    JButton loginButton,registerButton;
-    JLabel result;
-    App app;
-    public Login(App app) {
+    public JButton loginButton,registerButton;
+    public JLabel result;
+    public Login(JFrame parent) {
+        ActionListener listener = (ActionListener) parent;
         panel = new JPanel();
         panel.setLayout(new GridLayout(0, 2));
         usernameField = new JTextField(20);
@@ -20,25 +21,12 @@ public class Login implements ActionListener
         panel.add(passwordField);
         loginButton = new JButton("Login");
         panel.add(loginButton);
-        loginButton.addActionListener(this);
+        loginButton.addActionListener(listener);
         registerButton = new JButton("Register");
         panel.add(registerButton);
-        registerButton.addActionListener(this);
+        registerButton.addActionListener(listener);
         result = new JLabel();
         panel.add(result);
-        this.app=app;
-    }
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == loginButton) {
-            // check username and password
-            result.setText("Login Successful");
-            app.callFunction();
-        }
-        if(e.getSource() == registerButton)
-        {
-            System.out.println("Register");
-            app.makeregister();
-        }
     }
     public JPanel getLoginPanel() {
         return panel;

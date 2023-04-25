@@ -1,17 +1,18 @@
+package frontend;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-public class ShowSubstitues implements ActionListener
+public class ShowSales implements ActionListener
 {
     JPanel panel;
     JLabel label;
     JLabel text;
     JButton searchButton;
     private JTextField searchField;
-    public ShowSubstitues() {
+    public ShowSales() {
         panel = new JPanel();
-        label = new JLabel("Get Substitues of the Medicine");
-        text= new JLabel("");
+        label = new JLabel("Get Report of the customer");
+        text= new JLabel("default");
         searchField = new JTextField();
         // text = new JLabel("default");
         panel.setLayout(new GridLayout(2, 1));
@@ -28,10 +29,10 @@ public class ShowSubstitues implements ActionListener
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == searchButton)
         {
-            text.setText("Got the results");
+            text.setText("data");
         }
     }
-    public JPanel getSubstituesPanel(){
+    public JPanel getSalesPanel(){
         return panel;
     }
 }

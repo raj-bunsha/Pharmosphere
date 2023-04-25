@@ -1,7 +1,8 @@
+package frontend;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-public class InventoryManager implements ActionListener {
+class InventoryManager implements ActionListener {
     JPanel panel;
     JLabel label;
     JButton button;

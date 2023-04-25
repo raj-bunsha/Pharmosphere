@@ -10,17 +10,19 @@ CREATE TABLE Pharmacy(
 CREATE TABLE Medicine
 (
     id int PRIMARY KEY,
-    medicine_name varchar(30),
-    details varchar(100),
+    medicine_name varchar(30) UNIQUE,
+    details varchar(100)
 );
 CREATE TABLE Substitute(
     medicine_id int,
     substitute_id int,
+    FOREIGN KEY(medicine_id) REFERENCES Medicine(id),
+    FOREIGN KEY(substitute_id) REFERENCES Medicine(id)
 );
 CREATE TABLE Customer
 (
     id int PRIMARY KEY,
-    customer_name varchar(20),
+    customer_name varchar(20) UNIQUE,
     phone_number varchar(12)
 );
 CREATE TABLE Inventory(
@@ -46,5 +48,5 @@ CREATE TABLE SellRecords(
     medicine_id int,
     price int,
     quantity int,
-    FOREIGN KEY(order_id) REFERENCES Orders(id),
+    FOREIGN KEY(order_id) REFERENCES Orders(id)
 );
