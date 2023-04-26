@@ -3,7 +3,7 @@ package backend;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
-
+import java.util.AbstractMap.SimpleImmutableEntry;
 public class Database 
 {
     public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -14,34 +14,38 @@ public class Database
     public int pharmId;
 
     public Database() {
-        System.out.println("Connecting to database...");
         try {
             Class.forName(DRIVER);
             conn = DriverManager.getConnection(URL, USER, PASS);
             conn.setAutoCommit(true);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Unable to connect to database");
+            System.exit(1);
         }
         pharmId = -1;
+        System.out.println("Connected to database");
     }
     public int getPharmaId() {
         return pharmId;
     }
     // CUSTOMER FUNCTIONS==========================================================================================
-    public void addCustomer(Customer c) {
-        System.out.print("PASS");
+    public String addCustomer(Customer c) {
+        String result="";
         try {
             String sql = "insert into Customer (customer_name, phone_number) values(?, ?)";
             PreparedStatement p = conn.prepareStatement(sql);
             p.setString(1, c.getName());
             p.setString(2, c.getPhone());
             p.executeUpdate();
+            result = "Customer added to database";
         } catch (Exception e) {
-            e.printStackTrace();
+            result = "Customer usernmame must be unique and not empty";
         }
+        return result;
     }
 
     public int getCustomerId(String name) {
+        System.out.println(name);
         try {
             String sql = "select id from Customer where customer_name = \"" + name + "\"";
             Statement s = conn.createStatement();
@@ -49,15 +53,34 @@ public class Database
             if (r.next())
                 return r.getInt(1);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error getting customer id");
         }
         return -1;
+    }
+
+    public String AddSubstitutes(int id1,int id2)
+    {
+        System.out.println(id1 +" "+ id2);
+        try {
+            String sql = "insert into Substitute values(?, ?)";
+            PreparedStatement p = conn.prepareStatement(sql);
+            p.setInt(1, id1);
+            p.setInt(2, id2);
+            p.executeUpdate();
+            return "Substitutes added to database";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ("Error adding substitutes");
+        }
     }
 
     public ArrayList<String> getCustomerReport(String name) 
     {
         int id = getCustomerId(name);
+        System.out.println(id);
         ArrayList<String> report = new ArrayList<String>();
+        if(id < 0)
+            return report;
         try 
         {
             String sql = "select * from (select medicine_id, price, quantity, order_date from SellRecords join Orders where SellRecords.order_id = Orders.id and Orders.customer_id = "
@@ -72,25 +95,30 @@ public class Database
         catch(Exception e) 
         {
             e.printStackTrace();
+            System.out.println("Error generating report");
         }
         return report;
     }
 
     // MEDICINE FUNCTIONS========================================================================================
-    public void addMedicine(Medicine m) {
+    public String addMedicine(Medicine m) {
+        String ret = "";
         try {
             String sql = "insert into Medicine (medicine_name, details) values(?, ?)";
             PreparedStatement p = conn.prepareStatement(sql);
             p.setString(1, m.getName());
             p.setString(2, m.getDetails());
             p.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
+            ret =  "Medicine added to database";
+        } 
+        catch (Exception e) 
+        {
+            ret = "Medicine name must by unique and not empty";
         }
+        return ret;
     }
 
     public ArrayList<Medicine> getAllMedicines() {
-        System.out.println("PASS");
         ArrayList<Medicine> ret = new ArrayList<Medicine>();
         try {
             String sql = "select * from Medicine";
@@ -99,7 +127,7 @@ public class Database
             while (r.next())
                 ret.add(new Medicine(r.getString(2), r.getString(3)));
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error getting medicines");
         }
         return ret;
     }
@@ -113,7 +141,7 @@ public class Database
             if (r.next())
                 return r.getInt(1);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error getting medicine id");
         }
         return -1;
     }
@@ -122,6 +150,8 @@ public class Database
     {
         int id = getMedicineId(name);
         ArrayList<Medicine> sub = new ArrayList<Medicine>();
+        if(id < 0)
+            return sub;
         try {
             String sql = "select * from Substitute join Medicine where Substitute.substitute_id = Medicine.id and Substitute.medicine_id = "
                     + id;
@@ -135,6 +165,10 @@ public class Database
         return sub;
     }
 
+    public void setSubstitute(String medName, String SubstituteName){
+        
+    }
+
     //PHARMACY FUNCTIONS==============================================================================
     public void addPharmacy(Pharmacy m)
     {
@@ -146,7 +180,7 @@ public class Database
             p.setString(3, m.getLocation());
             p.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Pharmacy username must be unique, username and password must not be empty");
         }
     }
     public boolean validate(String user, String pass)
@@ -169,16 +203,16 @@ public class Database
         }
         return false;
     }
-    public ArrayList<String> getRevenue()
+    public ArrayList<SimpleImmutableEntry<String, Integer>>  getRevenue(String str)
     {
-        ArrayList<String> ret = new ArrayList<String>();
+        ArrayList<SimpleImmutableEntry<String, Integer>>  ret = new ArrayList<SimpleImmutableEntry<String, Integer>> ();
         try 
         {
-            String sql = "select pharmacy_id, sum(price * quantity) from SellRecords join Orders where SellRecords.order_id = Orders.id group by pharmacy_id";
+            String sql = "select pharmacy_name, revenue from (select pharmacy_id, sum(price * quantity) as revenue from SellRecords join Orders where SellRecords.order_id = Orders.id group by pharmacy_id) a join Pharmacy b where a.pharmacy_id = b.id and pharmacy_name like \"" + str + "%\"";
             Statement s = conn.createStatement();
             ResultSet r = s.executeQuery(sql);
             while (r.next())
-                continue;
+                ret.add(new SimpleImmutableEntry<String,Integer>(r.getString(1), r.getInt(2)));
         } 
         catch(Exception e) 
         {
@@ -192,7 +226,7 @@ public class Database
     {
         try
         {
-            String sql = "insert into Orders (customer_id, pharmacy_id, date) values(?, ?, ?)";
+            String sql = "insert into Orders (customer_id, pharmacy_id, order_date) values(?, ?, ?)";
             PreparedStatement p = conn.prepareStatement(sql);
             p.setInt(1, o.getCustomerId());
             p.setInt(2, o.getPharmacyId());
@@ -209,6 +243,7 @@ public class Database
     {
         try
         {
+            System.out.println("ORDER " + orderId);
             String sql = "insert into SellRecords (order_id, medicine_id, price, quantity) values(?, ?, ?, ?)";
             PreparedStatement p = conn.prepareStatement(sql);
             p.setInt(1, orderId);
@@ -228,7 +263,7 @@ public class Database
     public void addInventory(Inventory i)
     {
         try {
-            String sql = "insert into Inventory (pharmacy_id, medicine_id, quantity, expiry_date) values(?, ?, ?, ?, ?)";
+            String sql = "insert into Inventory (pharmacy_id, medicine_id, price, quantity, expiry_date) values(?, ?, ?, ?, ?)";
             PreparedStatement p = conn.prepareStatement(sql);
             p.setInt(1, i.getPharmId());
             p.setInt(2, i.getMedicineId());
@@ -245,11 +280,11 @@ public class Database
     public String getMedicineName(int id)
     {
         try {
-            String sql = "select name from Medicine where id = " + id;
+            String sql = "select medicine_name from Medicine where id = " + id;
             Statement s = conn.createStatement();
             ResultSet r = s.executeQuery(sql);
             if (r.next())
-                return r.getString(2);
+                return r.getString(1);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -302,7 +337,7 @@ public class Database
         return ret;
     }
 
-    public boolean makePurchase(String name, ArrayList<SellRecords> sell)
+    public int makePurchase(String name, ArrayList<SellRecords> sell)
     {
         Orders o = new Orders(getCustomerId(name), pharmId, LocalDate.now().toString());
         try
@@ -311,20 +346,20 @@ public class Database
             addOrder(o);
             int orderId = 0;
             Statement cnt = conn.createStatement();
-            ResultSet c = cnt.executeQuery("select count(orders) from orders");
+            ResultSet c = cnt.executeQuery("select max(id) from Orders");
             if(c.next())
                 orderId = c.getInt(1);
             else
             {
                 conn.rollback();
                 conn.setAutoCommit(true);
-                return false;
+                return 0;
             }
-            
+            int total = 0;
             for(SellRecords s: sell)
             {
                 Statement st = conn.createStatement();
-                ResultSet r = st.executeQuery("select id, price from Inventory where medicine_id = " + s.getMedicineId() + " and quantity >= " + s.getQuantity() + "order by price");
+                ResultSet r = st.executeQuery("select id, price from Inventory where medicine_id = " + s.getMedicineId() + " and quantity >= " + s.getQuantity() + " order by price");
                 int id = -1;
                 int price = 0;
                 if(r.next())
@@ -336,22 +371,24 @@ public class Database
                 {
                     conn.rollback();
                     conn.setAutoCommit(true);
-                    return false;
+                    return -s.getMedicineId();
                 }
+                total += price * s.getQuantity();
                 PreparedStatement up = conn.prepareStatement("update Inventory set quantity = quantity - ? where id = ?");
                 up.setInt(1, s.getQuantity());
                 up.setInt(2, id);
+                up.executeUpdate();
                 addSellRecord(s, orderId, price);
             }
             conn.commit();
             conn.setAutoCommit(true);
-            return true;
+            return total;
         }
         catch(Exception e)
         {
             e.printStackTrace();
         }
-        return false;
+        return 0;
     }
 
 }

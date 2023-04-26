@@ -22,8 +22,10 @@ class InventoryManager implements ActionListener {
         panel.setLayout(new GridLayout(3, 1));
         panel.add(label);
         panel.add(expbutton);
+        panel.add(showInventory);
         panel.add(text);
         expbutton.addActionListener(this);
+        showInventory.addActionListener(this);
         this.db = db;
     }
     public void actionPerformed(ActionEvent e) {
@@ -38,7 +40,7 @@ class InventoryManager implements ActionListener {
             ArrayList<Inventory> expmedicines = db.showInventory();
             String temp = "";
             for(Inventory med: expmedicines){
-                temp += db.getMedicineName(med.getMedicineId()) + " " + med.getQuantity() + " " + med.getExpiryDate() ;
+                temp += db.getMedicineName(med.getMedicineId()) + " " + med.getQuantity() + " " + med.getExpiryDate()+ " \n" ;
             }
             text.setText(temp);
         }

@@ -14,6 +14,7 @@ class MakePurchase implements ActionListener {
     int medicineCount = 0;
     ArrayList<ItemPanel> items;
     JComboBox<String> customerField;
+    JLabel result;
     Database db;
 
     public MakePurchase(Database db) {
@@ -29,10 +30,13 @@ class MakePurchase implements ActionListener {
         buyButton = new JButton("Buy Medicines");
         panel.setLayout(new GridLayout(0, 1));
         addButton = new JButton("+ Add Medicine");
+        result = new JLabel("");
         panel.add(customerField);
         panel.add(addButton);
         panel.add(buyButton);
+        panel.add(result);
         addButton.addActionListener(this);
+        buyButton.addActionListener(this);
         this.db = db;
     }
 
@@ -54,7 +58,20 @@ class MakePurchase implements ActionListener {
                     med.add(new SellRecords(db.getMedicineId(medicineName),quantity));
                 }
             }
-            db.makePurchase((String)customerField.getSelectedItem(),med);
+            // System.out.print("MADE PURCHASE");
+            int id=db.makePurchase((String)customerField.getSelectedItem(),med);
+            if(id<0)
+            {
+                result.setText("Not enough stock to buy "+db.getMedicineName(-id)+" medicine");
+            }
+            else if(id==0)
+            {
+                result.setText("Purchase Failed");
+            }
+            else
+            {
+                result.setText("Purchase Successful<br> Bill: "+id);
+            }
         }
     }
 
@@ -75,8 +92,6 @@ class ItemPanel implements ActionListener
     {
         medicinePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         ArrayList<Medicine> med = db.getAllMedicines();
-
-        medicineField = new JComboBox<>(medicineNames);
         String[] temp = new String[med.size()];
         for(int i=0;i<med.size();i++)
         {

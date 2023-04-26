@@ -28,6 +28,7 @@ class ShowSubstitues implements ActionListener
         panel.add(label);
         panel.add(searchButton);
         panel.add(text);
+        this.db = db;
     }
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == searchButton)
@@ -37,10 +38,10 @@ class ShowSubstitues implements ActionListener
             String temp = "";
             for(Medicine substitute : substitutes){
                 String name = substitute.getName();
-                temp += name+"\n";
+                temp += name+"<br>";
             }
             text.setText(temp);
-            text.setText("Got the results");
+            // text.setText("Got the results");
         }
     }
     public JPanel getSubstituesPanel(){

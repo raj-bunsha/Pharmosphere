@@ -1,5 +1,8 @@
 package frontend;
-import backend.Database;
+import backend.*;
+import java.util.*;
+import java.util.AbstractMap.SimpleImmutableEntry;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -16,8 +19,7 @@ public class ShowSales implements ActionListener
         label = new JLabel("Get Report of the Pharmacy");
         text= new JLabel("default");
         searchField = new JTextField();
-        // text = new JLabel("default");
-        panel.setLayout(new GridLayout(2, 1));
+        panel.setLayout(new GridLayout(0, 1));
         panel.add(searchField);
         searchButton = new JButton("Search");
 
@@ -32,7 +34,14 @@ public class ShowSales implements ActionListener
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == searchButton)
         {
+            String search = searchField.getText();
+            ArrayList<SimpleImmutableEntry<String, Integer>> revenue = db.getRevenue(search);
             text.setText("data");
+            String temp = "";// 
+            for(SimpleImmutableEntry<String, Integer> temp2 : revenue){
+                temp += temp2.getKey() +" "+ Integer.toString(temp2.getValue())+"\n";
+            }
+            text.setText(temp);
         }
     }
     public JPanel getSalesPanel(){

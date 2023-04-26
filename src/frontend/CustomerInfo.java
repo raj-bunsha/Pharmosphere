@@ -20,7 +20,7 @@ class CustomerInfo implements ActionListener
         text= new JLabel("default");
         searchField = new JTextField();
         // text = new JLabel("default");
-        panel.setLayout(new GridLayout(2, 1));
+        panel.setLayout(new GridLayout(0, 1));
         panel.add(searchField);
         searchButton = new JButton("Search");
 
@@ -35,15 +35,17 @@ class CustomerInfo implements ActionListener
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == searchButton)
         {
-            String searchText = searchButton.getText();
+            String searchText = searchField.getText();
             Database db = new Database();
             ArrayList<String> customerList = new ArrayList<String>();
+            System.out.print(searchText);
             customerList = db.getCustomerReport(searchText);
             if(!customerList.isEmpty()){
-                String temp = "";
+                String temp = "<html>";
                 for(String order : customerList){
-                    temp += order+"\n";
+                    temp += order+"<br>";
                 }
+                temp+="</html";
                 text.setText(temp);
             }
             else{

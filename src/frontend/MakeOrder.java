@@ -39,7 +39,7 @@ class MakeOrder implements ActionListener {
             System.out.println("hello");
             for(OrderPanel item:items)
             {
-                // if(item.status)
+                if(item.status)
                 {
                     String medicineName = (String)item.medicineField.getSelectedItem();
                     System.out.println(medicineName);

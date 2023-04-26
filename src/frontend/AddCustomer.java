@@ -1,11 +1,15 @@
 package frontend;
+
 import javax.swing.*;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 import backend.Customer;
 import backend.Database;
 
 import java.awt.*;
 import java.awt.event.*;
+
 class AddCustomer implements ActionListener {
     JPanel panel;
     JTextField nameField;
@@ -33,16 +37,16 @@ class AddCustomer implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submitButton) {
-            String name = nameField.getText();
-            String phone = phoneField.getText();
-            Customer cust = new Customer(name,phone);
-            System.out.println(name);
-            System.out.println(phone);
-            System.out.println(cust.getName());
-            db.addCustomer(cust);
-            result.setText("Customer added to database");
+                String name = nameField.getText();
+                String phone = phoneField.getText();
+                Customer cust = new Customer(name,phone);
+                System.out.println(name);
+                System.out.println(phone);
+                System.out.println(cust.getName());
+                result.setText(db.addCustomer(cust));
         }
     }
+
     public JPanel getAddCustomerPanel() {
         return panel;
     }

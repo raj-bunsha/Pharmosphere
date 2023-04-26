@@ -11,6 +11,7 @@ public class MenuS implements ActionListener
     JFrame frame;
     Database db;
     JButton AddCustomer, AddMedicine, MakePurchase, MakeOrder, InventoryManager, ShowSubstitues, ShowSales, CustomerInfo;
+    JButton AddSubstitute;
     public MenuS(JFrame frame, Database db)
     {
         panel = new JPanel();
@@ -25,6 +26,7 @@ public class MenuS implements ActionListener
         ShowSubstitues = new JButton("Show Substitues");
         ShowSales = new JButton("Show Sales");
         CustomerInfo = new JButton("Customer Info");
+        AddSubstitute = new JButton("Add Substitute");
         menuPanel.add(AddCustomer);
         menuPanel.add(AddMedicine);
         menuPanel.add(MakePurchase);
@@ -33,6 +35,7 @@ public class MenuS implements ActionListener
         menuPanel.add(ShowSubstitues);
         menuPanel.add(ShowSales);
         menuPanel.add(CustomerInfo);
+        menuPanel.add(AddSubstitute);
         AddCustomer.addActionListener(this);
         AddMedicine.addActionListener(this);
         MakePurchase.addActionListener(this);
@@ -41,6 +44,7 @@ public class MenuS implements ActionListener
         ShowSubstitues.addActionListener(this);
         ShowSales.addActionListener(this);
         CustomerInfo.addActionListener(this);
+        AddSubstitute.addActionListener(this);
         frame.add(panel);
         this.db=db;
     }
@@ -116,6 +120,15 @@ public class MenuS implements ActionListener
             frame.remove(panel);
             CustomerInfo panel8 = new CustomerInfo(db);
             panel=panel8.getInfoPanel();
+            frame.add(panel);
+            frame.revalidate();
+            frame.repaint();
+        }
+        else if(e.getSource() == AddSubstitute)
+        {
+            frame.remove(panel);
+            AddSubstitutes panel9 = new AddSubstitutes(db);
+            panel=panel9.getSubstitutePanel();
             frame.add(panel);
             frame.revalidate();
             frame.repaint();
