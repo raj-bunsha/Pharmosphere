@@ -1,7 +1,11 @@
 package frontend;
 import javax.swing.*;
+
+import backend.Database;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 class CustomerInfo implements ActionListener
 {
     JPanel panel;
@@ -9,7 +13,8 @@ class CustomerInfo implements ActionListener
     JLabel text;
     JButton searchButton;
     private JTextField searchField;
-    public CustomerInfo() {
+    Database db;
+    public CustomerInfo(Database db) {
         panel = new JPanel();
         label = new JLabel("Get Report of the customer");
         text= new JLabel("default");
@@ -25,11 +30,25 @@ class CustomerInfo implements ActionListener
         panel.add(label);
         panel.add(searchButton);
         panel.add(text);
+        this.db = db;
     }
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == searchButton)
         {
-            text.setText("data");
+            String searchText = searchButton.getText();
+            Database db = new Database();
+            ArrayList<String> customerList = new ArrayList<String>();
+            customerList = db.getCustomerReport(searchText);
+            if(!customerList.isEmpty()){
+                String temp = "";
+                for(String order : customerList){
+                    temp += order+"\n";
+                }
+                text.setText(temp);
+            }
+            else{
+                text.setText("No customer found.");
+            }
         }
     }
     public JPanel getInfoPanel(){

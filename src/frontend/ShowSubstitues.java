@@ -1,4 +1,6 @@
 package frontend;
+import java.util.*;
+import backend.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -8,10 +10,11 @@ class ShowSubstitues implements ActionListener
     JLabel label;
     JLabel text;
     JButton searchButton;
+    Database db;
     private JTextField searchField;
-    public ShowSubstitues() {
+    public ShowSubstitues(Database db) {
         panel = new JPanel();
-        label = new JLabel("Get Substitues of the Medicine");
+        label = new JLabel("Get Substitutes of the Medicine");
         text= new JLabel("");
         searchField = new JTextField();
         // text = new JLabel("default");
@@ -29,6 +32,14 @@ class ShowSubstitues implements ActionListener
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == searchButton)
         {
+            String medicine_name = searchField.getText();
+            ArrayList<Medicine> substitutes = db.getSubstitutes(medicine_name);
+            String temp = "";
+            for(Medicine substitute : substitutes){
+                String name = substitute.getName();
+                temp += name+"\n";
+            }
+            text.setText(temp);
             text.setText("Got the results");
         }
     }

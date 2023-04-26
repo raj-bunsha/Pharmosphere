@@ -1,36 +1,46 @@
 package frontend;
+import java.util.*;
 import javax.swing.*;
+
+import backend.Database;
+import backend.Inventory;
+
 import java.awt.*;
 import java.awt.event.*;
 class InventoryManager implements ActionListener {
     JPanel panel;
     JLabel label;
-    JButton button;
+    JButton expbutton, showInventory;
     JLabel text;
-    public InventoryManager() {
+    Database db;
+    public InventoryManager(Database db) {
         panel = new JPanel();
         label = new JLabel("Get Order");
-        button = new JButton("Print Order Summary");
+        expbutton = new JButton("Remove expired medicines");
+        showInventory = new JButton("Show all medicines");
         text = new JLabel("default");
-        panel.setLayout(new GridLayout(2, 1));
+        panel.setLayout(new GridLayout(3, 1));
         panel.add(label);
-        panel.add(button);
+        panel.add(expbutton);
         panel.add(text);
-        button.addActionListener(this);
+        expbutton.addActionListener(this);
+        this.db = db;
     }
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == button)
+        if(e.getSource() == expbutton)
         {
-            if(button.getText().equals("Print Order Summary"))
-            {
-                text.setText("Hello");
-                button.setText("Print Previous Order's Summary");
+            int removeno = db.removeExpired();
+            String temp = ""+removeno;
+            text.setText(temp);
+        }
+        else if(e.getSource() == showInventory)
+        {
+            ArrayList<Inventory> expmedicines = db.showInventory();
+            String temp = "";
+            for(Inventory med: expmedicines){
+                temp += db.getMedicineName(med.getMedicineId()) + " " + med.getQuantity() + " " + med.getExpiryDate() ;
             }
-            else
-            {
-                text.setText("HI1");
-                button.setText("Print Order Summary");
-            }
+            text.setText(temp);
         }
     }
     public JPanel getInventoryPanel(){

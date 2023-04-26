@@ -1,13 +1,17 @@
 package frontend;
 import javax.swing.*;
+
+import backend.Database;
+
 import java.awt.*;
 import java.awt.event.*;
 public class MenuS implements ActionListener
 {
     JPanel panel,menuPanel;
     JFrame frame;
+    Database db;
     JButton AddCustomer, AddMedicine, MakePurchase, MakeOrder, InventoryManager, ShowSubstitues, ShowSales, CustomerInfo;
-    public MenuS(JFrame frame)
+    public MenuS(JFrame frame, Database db)
     {
         panel = new JPanel();
         menuPanel = new JPanel();
@@ -38,6 +42,7 @@ public class MenuS implements ActionListener
         ShowSales.addActionListener(this);
         CustomerInfo.addActionListener(this);
         frame.add(panel);
+        this.db=db;
     }
     public void actionPerformed(ActionEvent e)
     {
@@ -46,7 +51,7 @@ public class MenuS implements ActionListener
             System.out.print("HI");
             frame.remove(panel);
             System.out.print("HI1");
-            AddCustomer panel1 = new AddCustomer();
+            AddCustomer panel1 = new AddCustomer(db);
             panel=panel1.getAddCustomerPanel();
             frame.add(panel);
             frame.revalidate();
@@ -55,7 +60,7 @@ public class MenuS implements ActionListener
         else if(e.getSource() == AddMedicine)
         {
             frame.remove(panel);
-            AddMedicine panel2 = new AddMedicine();
+            AddMedicine panel2 = new AddMedicine(db);
             panel=panel2.getAddMedicinePanel();
             frame.add(panel);
             frame.revalidate();
@@ -64,7 +69,7 @@ public class MenuS implements ActionListener
         else if(e.getSource() == MakePurchase)
         {
             frame.remove(panel);
-            MakePurchase panel3 = new MakePurchase();
+            MakePurchase panel3 = new MakePurchase(db);
             panel=panel3.getPurchasePanel();
             frame.add(panel);
             frame.revalidate();
@@ -73,7 +78,7 @@ public class MenuS implements ActionListener
         else if(e.getSource() == MakeOrder)
         {
             frame.remove(panel);
-            MakeOrder panel4 = new MakeOrder();
+            MakeOrder panel4 = new MakeOrder(db);
             panel=panel4.getOrderPanel();
             frame.add(panel);
             frame.revalidate();
@@ -82,7 +87,7 @@ public class MenuS implements ActionListener
         else if(e.getSource() == InventoryManager)
         {
             frame.remove(panel);
-            InventoryManager panel5 = new InventoryManager();
+            InventoryManager panel5 = new InventoryManager(db);
             panel=panel5.getInventoryPanel();
             frame.add(panel);
             frame.revalidate();
@@ -91,7 +96,7 @@ public class MenuS implements ActionListener
         else if(e.getSource() == ShowSubstitues)
         {
             frame.remove(panel);
-            ShowSubstitues panel6 = new ShowSubstitues();
+            ShowSubstitues panel6 = new ShowSubstitues(db);
             panel=panel6.getSubstituesPanel();
             frame.add(panel);
             frame.revalidate();
@@ -100,7 +105,7 @@ public class MenuS implements ActionListener
         else if(e.getSource() == ShowSales)
         {
             frame.remove(panel);
-            ShowSales panel7 = new ShowSales();
+            ShowSales panel7 = new ShowSales(db);
             panel=panel7.getSalesPanel();
             frame.add(panel);
             frame.revalidate();
@@ -109,7 +114,7 @@ public class MenuS implements ActionListener
         else if(e.getSource() == CustomerInfo)
         {
             frame.remove(panel);
-            CustomerInfo panel8 = new CustomerInfo();
+            CustomerInfo panel8 = new CustomerInfo(db);
             panel=panel8.getInfoPanel();
             frame.add(panel);
             frame.revalidate();

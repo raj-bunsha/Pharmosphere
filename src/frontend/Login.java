@@ -5,8 +5,8 @@ import java.awt.event.*;
 public class Login
 {
     JPanel panel;
-    JTextField usernameField;
-    JPasswordField passwordField;
+    public JTextField usernameField;
+    public JPasswordField passwordField;
     public JButton loginButton,registerButton;
     public JLabel result;
     public Login(JFrame parent) {

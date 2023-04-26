@@ -1,4 +1,5 @@
 package frontend;
+import backend.Database;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -9,9 +10,10 @@ public class ShowSales implements ActionListener
     JLabel text;
     JButton searchButton;
     private JTextField searchField;
-    public ShowSales() {
+    Database db;
+    public ShowSales(Database db) {
         panel = new JPanel();
-        label = new JLabel("Get Report of the customer");
+        label = new JLabel("Get Report of the Pharmacy");
         text= new JLabel("default");
         searchField = new JTextField();
         // text = new JLabel("default");
@@ -25,6 +27,7 @@ public class ShowSales implements ActionListener
         panel.add(label);
         panel.add(searchButton);
         panel.add(text);
+        this.db = db;
     }
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == searchButton)

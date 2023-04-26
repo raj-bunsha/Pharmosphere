@@ -16,3 +16,14 @@ Meanwhile, the compiled output files will be generated in the `bin` folder by de
 ## Dependency Management
 
 The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+
+
+
+
+
+
+
+##Things to do in database class
+
+1. ArrayList<Customers> getAllCustomers()
+2. int makePurchase(int customerID, ArrayList<tuple<String,int>>)

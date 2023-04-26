@@ -1,20 +1,13 @@
 package backend;
 public class Pharmacy 
 {
-    private int id;
     private String name, password, location;
 
-    public Pharmacy(int id, String name, String password, String location)
+    public Pharmacy(String name, String password, String location)
     {
-        this.id = id;
         this.name = name;
         this.password = password;
         this.location = location;
-    }
-
-    public int getId()
-    {
-        return id;
     }
     public String getName()
     {

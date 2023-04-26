@@ -1,5 +1,9 @@
 package frontend;
 import javax.swing.*;
+
+import backend.Customer;
+import backend.Database;
+
 import java.awt.*;
 import java.awt.event.*;
 class AddCustomer implements ActionListener {
@@ -8,8 +12,9 @@ class AddCustomer implements ActionListener {
     JTextField phoneField;
     JButton submitButton;
     JLabel result;
+    Database db;
 
-    public AddCustomer() {
+    public AddCustomer(Database db) {
         panel = new JPanel();
         panel.setLayout(new GridLayout(2, 2));
         nameField = new JTextField(20);
@@ -23,11 +28,18 @@ class AddCustomer implements ActionListener {
         submitButton.addActionListener(this);
         result = new JLabel();
         panel.add(result);
+        this.db = db;
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submitButton) {
-            // add customer to database
+            String name = nameField.getText();
+            String phone = phoneField.getText();
+            Customer cust = new Customer(name,phone);
+            System.out.println(name);
+            System.out.println(phone);
+            System.out.println(cust.getName());
+            db.addCustomer(cust);
             result.setText("Customer added to database");
         }
     }

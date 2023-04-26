@@ -10,14 +10,16 @@ public class App extends JFrame implements ActionListener {
     Register register;
     MenuS MenuS;
     Login login;
-    // static Database db = new Database();
+    Database db;
+    boolean flag = false;
 
     public App() {
         setLayout(new FlowLayout());
-        // create a panel
+        db = new Database();
         login = new Login(this);
+        register = new Register(this);
         panel = login.getLoginPanel();
-        MenuS = new MenuS(this);
+        MenuS = new MenuS(this, db);
         menuPanel = MenuS.getMenuPanel();
         add(panel);
     }
@@ -29,25 +31,42 @@ public class App extends JFrame implements ActionListener {
         repaint();
     }
 
-    public void makeregister()
-    {
+    public void makeregister() {
         remove(panel);
-        Register register = new Register(this);
         panel = register.getRegisterPanel();
         add(panel);
         revalidate();
         repaint();
+        flag = true;
     }
+
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == login.loginButton || e.getSource() == register.submitButton) {
+        if (e.getSource() == login.loginButton) {
             // check username and password
-            login.result.setText("Login Successful");
-            callFunction();
+            // System.out.println("Login");
+            String username = login.usernameField.getText();
+            String password = new String(login.passwordField.getPassword());
+            if (db.validate(username, password)) {
+                login.result.setText("Login Successful");
+                callFunction();
+            } else {
+                login.result.setText("Invalid Username or Password");
+            }
         }
-        if(e.getSource() == login.registerButton)
-        {
+        if (e.getSource() == login.registerButton) {
             System.out.println("Register");
             makeregister();
+        }
+        if (flag && e.getSource() == register.submitButton) {
+            String name = register.nameField.getText();
+            String password = register.passwordField.getText();
+            String location = register.locationField.getText();
+            System.out.println(name);
+            Pharmacy pharma = new Pharmacy(name, password, location);
+            db.addPharmacy(pharma);
+            register.result.setText("Pharma Registered");
+            db.validate(name, password);
+            callFunction();
         }
     }
 
