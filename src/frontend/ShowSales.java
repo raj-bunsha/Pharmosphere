@@ -10,23 +10,25 @@ public class ShowSales implements ActionListener
 {
     JPanel panel;
     JLabel label;
-    JLabel text;
+    JTextArea text;
     JButton searchButton;
     private JTextField searchField;
     Database db;
     public ShowSales(Database db) {
         panel = new JPanel();
         label = new JLabel("Get Report of the Pharmacy");
-        text= new JLabel("default");
+        text= new JTextArea("");
+        text.setEditable(false);
+        text.setFont(new Font("Roboto",Font.BOLD, 16));
         searchField = new JTextField();
-        panel.setLayout(new GridLayout(0, 1));
-        panel.add(searchField);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         searchButton = new JButton("Search");
-
+        
 
         searchButton.addActionListener(this);
 
         panel.add(label);
+        panel.add(searchField);
         panel.add(searchButton);
         panel.add(text);
         this.db = db;
@@ -35,11 +37,11 @@ public class ShowSales implements ActionListener
         if(e.getSource() == searchButton)
         {
             String search = searchField.getText();
-            ArrayList<SimpleImmutableEntry<String, Integer>> revenue = db.getRevenue(search);
-            text.setText("data");
-            String temp = "";// 
-            for(SimpleImmutableEntry<String, Integer> temp2 : revenue){
-                temp += temp2.getKey() +" "+ Integer.toString(temp2.getValue())+"\n";
+            ArrayList<ArrayList<String>> revenue = db.getRevenue(search);
+            String temp = "STORE NAME\t\t REVENUE\t Location\n";// 
+            for(ArrayList<String> temp2 : revenue){
+
+                temp += temp2.get(0) +"\t"+ temp2.get(1)+"\t"+temp2.get(2)+"\n";
             }
             text.setText(temp);
         }

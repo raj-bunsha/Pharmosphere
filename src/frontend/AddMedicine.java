@@ -15,9 +15,9 @@ class AddMedicine implements ActionListener {
     Database db;
     public AddMedicine(Database db) {
         panel = new JPanel();
-        panel.setLayout(new GridLayout(2, 2));
+        panel.setLayout(new GridLayout(0,2));
         nameField = new JTextField(20);
-        detailsField = new JTextField(100);
+        detailsField = new JTextField(50);
         panel.add(new JLabel("Name: "));
         panel.add(nameField);
         panel.add(new JLabel("Details: "));

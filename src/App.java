@@ -14,7 +14,8 @@ public class App extends JFrame implements ActionListener {
     boolean flag = false;
 
     public App() {
-        setLayout(new FlowLayout());
+        setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        setSize(800, 500);
         db = new Database();
         login = new Login(this);
         register = new Register(this);
@@ -76,7 +77,7 @@ public class App extends JFrame implements ActionListener {
         gui.setTitle("My first GUI");
         // change font size to 20
         gui.setFont(new Font("Arial", Font.PLAIN, 54));
-        gui.setSize(1000, 800);
+        gui.setSize(1350, 800);
         gui.setVisible(true);
     }
 }

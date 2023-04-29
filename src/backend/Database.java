@@ -89,8 +89,8 @@ public class Database
             ResultSet r = s.executeQuery(sql);
             // 2 - price 3 - quantity 4 -order date 6- medicine name 7- details
             while (r.next())
-                report.add(r.getString(2) + " " + r.getString(3) + " " + r.getString(4) + " " + r.getString(6) + " "
-                        + r.getString(7));
+                report.add(r.getString(6) + "\t\t" + r.getInt(3) + "\t\t" + r.getInt(2) + "\t\t" + r.getInt(2)*r.getInt(3) + "\t\t"
+                        + r.getString(4));
         } 
         catch(Exception e) 
         {
@@ -203,16 +203,22 @@ public class Database
         }
         return false;
     }
-    public ArrayList<SimpleImmutableEntry<String, Integer>>  getRevenue(String str)
+    public ArrayList<ArrayList<String>>  getRevenue(String str)
     {
-        ArrayList<SimpleImmutableEntry<String, Integer>>  ret = new ArrayList<SimpleImmutableEntry<String, Integer>> ();
+        ArrayList<ArrayList<String>>  ret = new ArrayList<ArrayList<String>> ();
         try 
         {
-            String sql = "select pharmacy_name, revenue from (select pharmacy_id, sum(price * quantity) as revenue from SellRecords join Orders where SellRecords.order_id = Orders.id group by pharmacy_id) a join Pharmacy b where a.pharmacy_id = b.id and pharmacy_name like \"" + str + "%\"";
+            String sql = "select pharmacy_name, revenue,location from (select pharmacy_id, sum(price * quantity) as revenue from SellRecords join Orders where SellRecords.order_id = Orders.id group by pharmacy_id) a join Pharmacy b where a.pharmacy_id = b.id and pharmacy_name like \"" + str + "%\"";
             Statement s = conn.createStatement();
             ResultSet r = s.executeQuery(sql);
             while (r.next())
-                ret.add(new SimpleImmutableEntry<String,Integer>(r.getString(1), r.getInt(2)));
+            {
+                ArrayList<String> temp=new ArrayList<String>();
+                temp.add(r.getString(1));
+                temp.add(r.getString(2));
+                temp.add(r.getString(3));
+                ret.add(temp);
+            }
         } 
         catch(Exception e) 
         {

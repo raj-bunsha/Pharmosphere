@@ -10,24 +10,26 @@ class CustomerInfo implements ActionListener
 {
     JPanel panel;
     JLabel label;
-    JLabel text;
+    JTextArea text;
     JButton searchButton;
     private JTextField searchField;
     Database db;
     public CustomerInfo(Database db) {
         panel = new JPanel();
         label = new JLabel("Get Report of the customer");
-        text= new JLabel("default");
+        text= new JTextArea("");
+        text.setEditable(false);
+        text.setFont(new Font("Roboto",Font.BOLD, 16));
         searchField = new JTextField();
         // text = new JLabel("default");
-        panel.setLayout(new GridLayout(0, 1));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(label);
         panel.add(searchField);
         searchButton = new JButton("Search");
 
 
         searchButton.addActionListener(this);
 
-        panel.add(label);
         panel.add(searchButton);
         panel.add(text);
         this.db = db;
@@ -41,11 +43,10 @@ class CustomerInfo implements ActionListener
             System.out.print(searchText);
             customerList = db.getCustomerReport(searchText);
             if(!customerList.isEmpty()){
-                String temp = "<html>";
+                String temp = "MEDICINE NAME\tQUANTITY\t\tPRICE\t\tTOTAL PRICE\t\tDATE\n";
                 for(String order : customerList){
-                    temp += order+"<br>";
+                    temp += order+"\n";
                 }
-                temp+="</html";
                 text.setText(temp);
             }
             else{

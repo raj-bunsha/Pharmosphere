@@ -15,9 +15,9 @@ public class MenuS implements ActionListener
     public MenuS(JFrame frame, Database db)
     {
         panel = new JPanel();
-        menuPanel = new JPanel();
         this.frame = frame;
-        panel.setLayout(new GridLayout(0, 2));
+        menuPanel = new JPanel();
+        menuPanel.setLayout(new GridLayout(0, 9));
         AddCustomer = new JButton("Add Customer");
         AddMedicine = new JButton("Add Medicine");
         MakePurchase = new JButton("Make Purchase");
@@ -46,6 +46,7 @@ public class MenuS implements ActionListener
         CustomerInfo.addActionListener(this);
         AddSubstitute.addActionListener(this);
         frame.add(panel);
+        // frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
         this.db=db;
     }
     public void actionPerformed(ActionEvent e)

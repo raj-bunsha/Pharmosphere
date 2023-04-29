@@ -20,7 +20,7 @@ class AddCustomer implements ActionListener {
 
     public AddCustomer(Database db) {
         panel = new JPanel();
-        panel.setLayout(new GridLayout(2, 2));
+        panel.setLayout(new GridLayout(0,2));
         nameField = new JTextField(20);
         phoneField = new JTextField(20);
         panel.add(new JLabel("Name: "));
