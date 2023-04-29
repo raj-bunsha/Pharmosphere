@@ -1,9 +1,6 @@
 package frontend;
 
 import javax.swing.*;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-
 import backend.Customer;
 import backend.Database;
 

@@ -8,7 +8,6 @@ import backend.Medicine;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Set;
 
 class MakeOrder implements ActionListener {
     JPanel panel;

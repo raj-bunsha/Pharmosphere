@@ -2,7 +2,6 @@ package frontend;
 import javax.swing.*;
 
 import backend.Database;
-import backend.Inventory;
 import backend.Medicine;
 
 import java.awt.*;
