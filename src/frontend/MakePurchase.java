@@ -14,7 +14,7 @@ class MakePurchase implements ActionListener {
     int medicineCount = 0;
     ArrayList<ItemPanel> items;
     JComboBox<String> customerField;
-    JLabel result;
+    JTextArea result;
     Database db;
 
     public MakePurchase(Database db) {
@@ -30,7 +30,9 @@ class MakePurchase implements ActionListener {
         buyButton = new JButton("Buy Medicines");
         panel.setLayout(new GridLayout(0, 1));
         addButton = new JButton("+ Add Medicine");
-        result = new JLabel("");
+        result = new JTextArea("");
+        result.setEditable(false);
+        result.setFont(new Font("Roboto",Font.BOLD, 16));
         panel.add(customerField);
         panel.add(addButton);
         panel.add(buyButton);
@@ -58,7 +60,6 @@ class MakePurchase implements ActionListener {
                     med.add(new SellRecords(db.getMedicineId(medicineName),quantity));
                 }
             }
-            // System.out.print("MADE PURCHASE");
             int id=db.makePurchase((String)customerField.getSelectedItem(),med);
             if(id<0)
             {
@@ -70,7 +71,7 @@ class MakePurchase implements ActionListener {
             }
             else
             {
-                result.setText("Purchase Successful<br> Bill: "+id);
+                result.setText("Purchase Successful\tBill: Rs"+id);
             }
         }
     }

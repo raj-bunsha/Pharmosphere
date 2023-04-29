@@ -44,7 +44,6 @@ public class App extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == login.loginButton) {
             // check username and password
-            // System.out.println("Login");
             String username = login.usernameField.getText();
             String password = new String(login.passwordField.getPassword());
             if (db.validate(username, password)) {
@@ -55,14 +54,12 @@ public class App extends JFrame implements ActionListener {
             }
         }
         if (e.getSource() == login.registerButton) {
-            System.out.println("Register");
             makeregister();
         }
         if (flag && e.getSource() == register.submitButton) {
             String name = register.nameField.getText();
             String password = register.passwordField.getText();
             String location = register.locationField.getText();
-            System.out.println(name);
             Pharmacy pharma = new Pharmacy(name, password, location);
             db.addPharmacy(pharma);
             register.result.setText("Pharma Registered");

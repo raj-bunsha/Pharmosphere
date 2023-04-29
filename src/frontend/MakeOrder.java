@@ -8,12 +8,14 @@ import backend.Medicine;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Set;
 
 class MakeOrder implements ActionListener {
     JPanel panel;
     JButton addButton, buyButton;
     int medicineCount = 0;
     ArrayList<OrderPanel> items;
+    JTextArea text;
     Database db;
 
     public MakeOrder(Database db) {
@@ -26,6 +28,10 @@ class MakeOrder implements ActionListener {
         panel.add(buyButton);
         addButton.addActionListener(this);
         buyButton.addActionListener(this);
+        text = new JTextArea();
+        text.setEditable(false);
+        text.setFont(new Font("Roboto",Font.BOLD, 16));
+        panel.add(text);
         this.db = db;
     }
 
@@ -36,13 +42,11 @@ class MakeOrder implements ActionListener {
         }
         if(e.getSource() == buyButton)
         {
-            System.out.println("hello");
             for(OrderPanel item:items)
             {
                 if(item.status)
                 {
                     String medicineName = (String)item.medicineField.getSelectedItem();
-                    System.out.println(medicineName);
                     Integer quantity = Integer.parseInt(item.quantityField.getText());
                     Integer price = Integer.parseInt(item.priceField.getText());
                     String expiry = item.expiryDate.getText();
@@ -50,6 +54,7 @@ class MakeOrder implements ActionListener {
                     db.addInventory(temp);
                 }
             }
+            text.setText("Order Placed Successfully");
         }
     }
 
@@ -72,7 +77,6 @@ class OrderPanel implements ActionListener
         
         medicinePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         ArrayList<Medicine> med = new ArrayList<Medicine>();
-        System.out.println("hello");
         med= db.getAllMedicines();
         String[] temp = new String[med.size()];
         for(int i=0;i<med.size();i++)

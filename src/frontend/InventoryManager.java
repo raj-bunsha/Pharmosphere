@@ -18,7 +18,7 @@ class InventoryManager implements ActionListener {
         // label = new JLabel("Get Order");
         expbutton = new JButton("Remove expired medicines");
         showInventory = new JButton("Show all medicines");
-        text = new JTextArea("default");
+        text = new JTextArea("");
         panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
         text.setFont(new Font("Roboto",Font.BOLD, 16));
         // panel.add(label);
@@ -40,9 +40,9 @@ class InventoryManager implements ActionListener {
         {
             ArrayList<Inventory> expmedicines = db.showInventory();
             String temp = "";
-            temp += "MEDICINE NAME\t QUANTITY \t EXPIRY DATE \t \n";
+            temp += "NAME\t PRICE \tQUANTITY  \tEXPIRY DATE\n";
             for(Inventory med: expmedicines){
-                temp += db.getMedicineName(med.getMedicineId()) + "\t " + med.getQuantity() + "\t " + med.getExpiryDate()+ " \n" ;
+                temp += db.getMedicineName(med.getMedicineId()) +"\t " + med.getPrice()+ "\t " + med.getQuantity() + "\t " + med.getExpiryDate()+ " \n" ;
             }
             text.setText(temp);
         }

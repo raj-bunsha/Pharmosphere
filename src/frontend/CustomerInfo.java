@@ -40,7 +40,6 @@ class CustomerInfo implements ActionListener
             String searchText = searchField.getText();
             Database db = new Database();
             ArrayList<String> customerList = new ArrayList<String>();
-            System.out.print(searchText);
             customerList = db.getCustomerReport(searchText);
             if(!customerList.isEmpty()){
                 String temp = "MEDICINE NAME\tQUANTITY\t\tPRICE\t\tTOTAL PRICE\t\tDATE\n";
@@ -50,7 +49,7 @@ class CustomerInfo implements ActionListener
                 text.setText(temp);
             }
             else{
-                text.setText("No customer found.");
+                text.setText("No Records Found..");
             }
         }
     }

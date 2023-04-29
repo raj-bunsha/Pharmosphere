@@ -19,11 +19,9 @@ public class Database
             conn = DriverManager.getConnection(URL, USER, PASS);
             conn.setAutoCommit(true);
         } catch (Exception e) {
-            System.out.println("Unable to connect to database");
             System.exit(1);
         }
         pharmId = -1;
-        System.out.println("Connected to database");
     }
     public int getPharmaId() {
         return pharmId;
@@ -45,7 +43,6 @@ public class Database
     }
 
     public int getCustomerId(String name) {
-        System.out.println(name);
         try {
             String sql = "select id from Customer where customer_name = \"" + name + "\"";
             Statement s = conn.createStatement();
@@ -53,14 +50,12 @@ public class Database
             if (r.next())
                 return r.getInt(1);
         } catch (Exception e) {
-            System.out.println("Error getting customer id");
         }
         return -1;
     }
 
     public String AddSubstitutes(int id1,int id2)
     {
-        System.out.println(id1 +" "+ id2);
         try {
             String sql = "insert into Substitute values(?, ?)";
             PreparedStatement p = conn.prepareStatement(sql);
@@ -77,7 +72,6 @@ public class Database
     public ArrayList<String> getCustomerReport(String name) 
     {
         int id = getCustomerId(name);
-        System.out.println(id);
         ArrayList<String> report = new ArrayList<String>();
         if(id < 0)
             return report;
@@ -95,7 +89,6 @@ public class Database
         catch(Exception e) 
         {
             e.printStackTrace();
-            System.out.println("Error generating report");
         }
         return report;
     }
@@ -113,7 +106,7 @@ public class Database
         } 
         catch (Exception e) 
         {
-            ret = "Medicine name must by unique and not empty";
+            ret = "Medicine name must be unique and not empty";
         }
         return ret;
     }
@@ -127,7 +120,7 @@ public class Database
             while (r.next())
                 ret.add(new Medicine(r.getString(2), r.getString(3)));
         } catch (Exception e) {
-            System.out.println("Error getting medicines");
+
         }
         return ret;
     }
@@ -141,7 +134,7 @@ public class Database
             if (r.next())
                 return r.getInt(1);
         } catch (Exception e) {
-            System.out.println("Error getting medicine id");
+
         }
         return -1;
     }
@@ -180,7 +173,6 @@ public class Database
             p.setString(3, m.getLocation());
             p.executeUpdate();
         } catch (Exception e) {
-            System.out.println("Pharmacy username must be unique, username and password must not be empty");
         }
     }
     public boolean validate(String user, String pass)
@@ -193,7 +185,6 @@ public class Database
             if(r.next())
             {
                 pharmId = r.getInt(1);
-                System.out.println(r.getString(2) + " " + pass);
                 return r.getString(2).equals(pass);
             }
         } 
@@ -249,7 +240,6 @@ public class Database
     {
         try
         {
-            System.out.println("ORDER " + orderId);
             String sql = "insert into SellRecords (order_id, medicine_id, price, quantity) values(?, ?, ?, ?)";
             PreparedStatement p = conn.prepareStatement(sql);
             p.setInt(1, orderId);
@@ -277,7 +267,7 @@ public class Database
             p.setInt(4, i.getQuantity());
             p.setString(5, i.getExpiryDate());
             p.executeUpdate();
-            System.out.println("ADDED");
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

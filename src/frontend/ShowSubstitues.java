@@ -8,24 +8,24 @@ class ShowSubstitues implements ActionListener
 {
     JPanel panel;
     JLabel label;
-    JLabel text;
+    JTextArea text;
     JButton searchButton;
     Database db;
     private JTextField searchField;
     public ShowSubstitues(Database db) {
         panel = new JPanel();
         label = new JLabel("Get Substitutes of the Medicine");
-        text= new JLabel("");
+        text= new JTextArea("");
+        text.setEditable(false);
+        text.setFont(new Font("Roboto",Font.BOLD, 16));
         searchField = new JTextField();
         // text = new JLabel("default");
-        panel.setLayout(new GridLayout(2, 1));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(searchField);
         searchButton = new JButton("Search");
-
-
+        panel.add(label);
         searchButton.addActionListener(this);
 
-        panel.add(label);
         panel.add(searchButton);
         panel.add(text);
         this.db = db;
@@ -38,7 +38,7 @@ class ShowSubstitues implements ActionListener
             String temp = "";
             for(Medicine substitute : substitutes){
                 String name = substitute.getName();
-                temp += name+"<br>";
+                temp += name+"\n";
             }
             text.setText(temp);
             // text.setText("Got the results");

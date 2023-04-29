@@ -40,9 +40,6 @@ class AddCustomer implements ActionListener {
                 String name = nameField.getText();
                 String phone = phoneField.getText();
                 Customer cust = new Customer(name,phone);
-                System.out.println(name);
-                System.out.println(phone);
-                System.out.println(cust.getName());
                 result.setText(db.addCustomer(cust));
         }
     }

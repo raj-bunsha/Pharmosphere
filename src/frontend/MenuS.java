@@ -20,12 +20,12 @@ public class MenuS implements ActionListener
         menuPanel.setLayout(new GridLayout(0, 9));
         AddCustomer = new JButton("Add Customer");
         AddMedicine = new JButton("Add Medicine");
-        MakePurchase = new JButton("Make Purchase");
+        MakePurchase = new JButton("Sell Medicine");
         MakeOrder = new JButton("Make Order");
         InventoryManager = new JButton("Inventory Manager");
-        ShowSubstitues = new JButton("Show Substitues");
+        ShowSubstitues = new JButton("Show Substitutes");
         ShowSales = new JButton("Show Sales");
-        CustomerInfo = new JButton("Customer Info");
+        CustomerInfo = new JButton("Customer Report");
         AddSubstitute = new JButton("Add Substitute");
         menuPanel.add(AddCustomer);
         menuPanel.add(AddMedicine);
@@ -53,9 +53,7 @@ public class MenuS implements ActionListener
     {
         if(e.getSource() == AddCustomer)
         {
-            System.out.print("HI");
             frame.remove(panel);
-            System.out.print("HI1");
             AddCustomer panel1 = new AddCustomer(db);
             panel=panel1.getAddCustomerPanel();
             frame.add(panel);

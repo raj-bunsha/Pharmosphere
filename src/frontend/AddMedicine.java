@@ -17,7 +17,7 @@ class AddMedicine implements ActionListener {
         panel = new JPanel();
         panel.setLayout(new GridLayout(0,2));
         nameField = new JTextField(20);
-        detailsField = new JTextField(50);
+        detailsField = new JTextField(20);
         panel.add(new JLabel("Name: "));
         panel.add(nameField);
         panel.add(new JLabel("Details: "));
@@ -36,8 +36,7 @@ class AddMedicine implements ActionListener {
             String name = nameField.getText();
             String category = detailsField.getText();
             Medicine medicine = new Medicine(name,category);
-            db.addMedicine(medicine);
-            result.setText("Medicine added to database");
+            result.setText(db.addMedicine(medicine));
         }
     }
     public JPanel getAddMedicinePanel() {

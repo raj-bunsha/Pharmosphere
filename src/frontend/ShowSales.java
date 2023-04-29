@@ -38,7 +38,7 @@ public class ShowSales implements ActionListener
         {
             String search = searchField.getText();
             ArrayList<ArrayList<String>> revenue = db.getRevenue(search);
-            String temp = "STORE NAME\t\t REVENUE\t Location\n";// 
+            String temp = "STORE NAME\t REVENUE\t Location\n";// 
             for(ArrayList<String> temp2 : revenue){
 
                 temp += temp2.get(0) +"\t"+ temp2.get(1)+"\t"+temp2.get(2)+"\n";
