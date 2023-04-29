@@ -61,17 +61,23 @@ public class App extends JFrame implements ActionListener {
             String password = register.passwordField.getText();
             String location = register.locationField.getText();
             Pharmacy pharma = new Pharmacy(name, password, location);
-            db.addPharmacy(pharma);
-            register.result.setText("Pharma Registered");
-            db.validate(name, password);
-            callFunction();
+            if(db.addPharmacy(pharma))
+            {
+                register.result.setText("Pharma Registered");
+                db.validate(name, password);
+                callFunction();
+            }
+            else
+            {
+                register.result.setText("Error in Registering");
+            }
         }
     }
 
     public static void main(String[] args) {
         App gui = new App();
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gui.setTitle("My first GUI");
+        gui.setTitle("Pharmacy Management System");
         // change font size to 20
         gui.setFont(new Font("Arial", Font.PLAIN, 54));
         gui.setSize(1350, 800);

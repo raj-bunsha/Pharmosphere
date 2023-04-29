@@ -77,7 +77,7 @@ public class Database
         try 
         {
             String sql = "select * from (select medicine_id, price, quantity, order_date from SellRecords join Orders where SellRecords.order_id = Orders.id and Orders.customer_id = "
-                    + id + ") a join Medicine b where a.medicine_id = b.id";
+                    + id + ") a join Medicine b where a.medicine_id = b.id order by order_date desc";
             Statement s = conn.createStatement();
             ResultSet r = s.executeQuery(sql);
             // 2 - price 3 - quantity 4 -order date 6- medicine name 7- details
@@ -162,7 +162,7 @@ public class Database
     }
 
     //PHARMACY FUNCTIONS==============================================================================
-    public void addPharmacy(Pharmacy m)
+    public boolean addPharmacy(Pharmacy m)
     {
         try {
             String sql = "insert into Pharmacy (pharmacy_name, password, location) values(?, ?, ?)";
@@ -171,7 +171,9 @@ public class Database
             p.setString(2, m.getPassword());
             p.setString(3, m.getLocation());
             p.executeUpdate();
+            return true;
         } catch (Exception e) {
+            return false;
         }
     }
     public boolean validate(String user, String pass)
