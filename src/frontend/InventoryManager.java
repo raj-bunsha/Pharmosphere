@@ -21,6 +21,7 @@ class InventoryManager implements ActionListener {
         text = new JTextArea("");
         panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
         text.setFont(new Font("Roboto",Font.BOLD, 16));
+        text.setEditable(false);
         // panel.add(label);
         panel.add(expbutton);
         panel.add(showInventory);
@@ -33,7 +34,7 @@ class InventoryManager implements ActionListener {
         if(e.getSource() == expbutton)
         {
             int removeno = db.removeExpired();
-            String temp = ""+removeno;
+            String temp = removeno+" expired medicines removed";
             text.setText(temp);
         }
         else if(e.getSource() == showInventory)
