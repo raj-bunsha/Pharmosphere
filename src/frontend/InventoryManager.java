@@ -16,7 +16,7 @@ class InventoryManager implements ActionListener {
     public InventoryManager(Database db) {
         panel = new JPanel();
         // label = new JLabel("Get Order");
-        expbutton = new JButton("Remove expired medicines");
+        expbutton = new JButton("Clean Inventory");
         showInventory = new JButton("Show all medicines");
         text = new JTextArea("");
         panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
@@ -34,7 +34,7 @@ class InventoryManager implements ActionListener {
         if(e.getSource() == expbutton)
         {
             int removeno = db.removeExpired();
-            String temp = removeno+" expired medicines removed";
+            String temp = removeno+" medicines removed";
             text.setText(temp);
         }
         else if(e.getSource() == showInventory)

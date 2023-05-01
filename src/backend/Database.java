@@ -293,7 +293,7 @@ public class Database
         LocalDate today = LocalDate.now();
         String date = today.toString();
         try {
-            String sql = "delete from Inventory where expiry_date <= ?";
+            String sql = "delete from Inventory where expiry_date <= ? or quantity = 0";
             PreparedStatement p = conn.prepareStatement(sql);
             p.setString(1, date);
             return p.executeUpdate();
