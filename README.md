@@ -38,3 +38,8 @@ Meanwhile, the compiled output files will be generated in the `bin` folder by de
 Made as a part of the course database management system in IIITB.
 
 To run the application, run the App in the src folder.
+
+##Contributors
+Raj Bunsha
+Adithya Sunil
+Tanmay Jain
